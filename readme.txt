@@ -1,9 +1,8 @@
-¹ØÓÚ°æ±¾:
+å…³äºç‰ˆæœ¬:
 jdk8 + tomcat9.0 + mysql
-¹ØÓÚ¹¤¾ß:eclipse
-¹ØÓÚ¿ò¼Ü: struts2 + spring + hibernate + jsp
-1. µ¼ÈëÊı¾İ¿âµ½ÄãµÄ±¾µØ
-2. ½«ÏîÄ¿µ¼ÈëÄãµÄeclipse
-3. ĞŞ¸ÄapplicationContext.xml ÖĞµÄÊı¾İ¿âÅäÖÃ
-4. ÈôjdkºÍtomcat²»¼æÈİ ÔÚeclipseÖĞbuild path ÀïÃæÅäÖÃ 
-5. Óöµ½ÎÊÌâ www.baidu.com or call me
+å…³äºå·¥å…·:eclipse
+å…³äºæ¡†æ¶: struts2 + spring + hibernate + jsp
+1. å¯¼å…¥æ•°æ®åº“åˆ°ä½ çš„æœ¬åœ°
+2. å°†é¡¹ç›®å¯¼å…¥ä½ çš„eclipse
+3. ä¿®æ”¹applicationContext.xml ä¸­çš„æ•°æ®åº“é…ç½®
+4. è‹¥jdkå’Œtomcatä¸å…¼å®¹ åœ¨eclipseä¸­build path é‡Œé¢é…ç½® 
