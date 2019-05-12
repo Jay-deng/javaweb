@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+	
+	<class name="org.besteam.domain.AbsenteeRecord" table="absentee_record">
+		<id name="absentee_id" column="absentee_id">
+			<generator class="native"/>
+		</id>
+		
+		<property name="t_u_user" column="t_u_user"/>
+		<property name="absentee_date" column="absentee_date"/>
+		<property name="buildingId" column="buildingid"/>
+		<property name="dorId" column="dorid"/>
+		
+		<property name="absentee_desc" column="absentee_desc"/>
+		<many-to-one name="user" class="org.besteam.domain.User" column="abs_user_id" cascade="save-update"></many-to-one>
+		
+	</class>
+	
+</hibernate-mapping>    

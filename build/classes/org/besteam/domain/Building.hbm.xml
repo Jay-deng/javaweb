@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+	
+	<class name="org.besteam.domain.Building" table="building">
+		<id name="building_id" column="building_id">
+			<generator class="native"/>
+		</id>
+		
+		<property name="b_desc" column="b_desc"/>
+		<property name="gender_in" column="gender_in"/>
+		
+		<property name="user_id" column="user_id"/>
+		<set name="dormitorys" inverse="true">
+			<key column="dor_buil_id"/>
+			<one-to-many class="org.besteam.domain.Dormitory"/>
+		</set>
+	</class>
+	
+</hibernate-mapping>    

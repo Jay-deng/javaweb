@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 请修改这里↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+	<!-- 先配置C3P0的连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<!-- 连接本地数据库可省略ip+端口 -->
+		<property name="jdbcUrl" value="jdbc:mysql:///school"/>
+		<property name="user" value="root"/>
+		<property name="password" value="你的密码"/>
+	</bean>
+	
+	<!-- LocalSessionFactoryBean加载配置文件 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 先加载连接池 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 加载方言，加载可选 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+		
+		<!-- 引入映射的配置文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>org/besteam/domain/User.hbm.xml</value>
+				<value>org/besteam/domain/Dormitory.hbm.xml</value>
+				<value>org/besteam/domain/Building.hbm.xml</value>
+				<value>org/besteam/domain/AbsenteeRecord.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 先配置平台事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 开启事务的注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	
+	
+	<!-- 用户操作模块 -->
+	<bean id="userAction" class="org.besteam.web.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService"/>
+		<property name="buildingService" ref="buildingService"/>
+		<property name="dormitoryService" ref="dormitoryService"/>
+	</bean>
+	<bean id="userService" class="org.besteam.serviceimpl.UserServiceImpl">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	<bean id="userDao" class="org.besteam.daoimpl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 楼宇模块 -->
+	
+	<bean id="buildingAction" class="org.besteam.web.action.BuildingAction" scope="prototype">
+		<property name="buildingService" ref="buildingService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="buildingService" class="org.besteam.serviceimpl.BuildingServiceImpl">
+			<property name="buildingDao" ref="buildingDao"/>
+		</bean>
+	<bean id="buildingDao" class="org.besteam.daoimpl.BuildingDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	
+	<!-- 宿舍模块 -->
+	
+	<bean id="dormitoryAction" class="org.besteam.web.action.DormitoryAction" scope="prototype">
+		<property name="dormitoryService" ref="dormitoryService"/>
+		<property name="buildingService" ref="buildingService"/>
+	</bean>
+	<bean id="dormitoryService" class="org.besteam.serviceimpl.DormitoryServiceImpl">
+		<property name="dormitoryDao" ref="dormitoryDao"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="dormitoryDao" class="org.besteam.daoimpl.DormitoryDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	
+	<!-- 记录模块 -->
+	
+	<bean id="absenteeRecordAction" class="org.besteam.web.action.AbsenteeRecordAction" scope="prototype">
+		<property name="absenteeRecordService" ref="absenteeRecordService"/>
+		<property name="userService" ref="userService"/>
+		<property name="buildingService" ref="buildingService"/>
+		<property name="dormitoryService" ref="dormitoryService"/>
+	</bean>
+	<bean id="absenteeRecordService" class="org.besteam.serviceimpl.AbsenteeRecordServiceImpl">
+		<property name="absenteeRecordDao" ref="absenteeRecordDao"></property>
+	</bean>
+	<bean id="absenteeRecordDao" class="org.besteam.daoimpl.AbsenteeRecordDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+

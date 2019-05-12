@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启动态方法访问常量 -->
+	<constant value="true" name="struts.enable.DynamicMethodInvocation" />
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<interceptor name="userInterceptor"
+				class="org.besteam.web.interceptor.UserInterceptor" />
+		</interceptors>
+
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="success">/index.jsp</result>
+		</global-results>
+		<!-- 用户模块 -->
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="success" type="redirect">/index.jsp</result>
+			<result name="changePwd" type="redirect">/changePwd.jsp</result>
+			<result name="addUser">/addUser.jsp</result>
+			<result name="admins">/adminM.jsp </result>
+			<result name="students">/adminM.jsp </result>
+			<result name="ok">/addUser.jsp</result>
+			<result name="updateUser">/updateUser.jsp</result>
+			<result name="studntin">/studentin.jsp</result>
+			<result name="selectDro">/selectDro.jsp</result>
+			<result name="changeDro2">/changeDro2.jsp</result>
+			<result name="selectDro2">/selectDro2.jsp</result>
+			<result name="outSchool">/outSchool.jsp</result>
+			<result name="changeDro">/changeDro.jsp</result>
+			<interceptor-ref name="userInterceptor">
+				<!-- 登录方法不拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<!-- 引入默认的拦截器 -->
+			<interceptor-ref name="defaultStack" />
+
+		</action>
+		<!-- 楼宇模块 -->
+		<action name="building_*" class="buildingAction" method="{1}">
+			<result name="bListPage">/buildingList.jsp</result>
+			<result name="updateBuilding">/updateBuilding.jsp</result>
+			<result name="addBuildingAdmin">/addBuildingAdmin.jsp</result>
+			<result name="pageui" type="redirect">building_findByPageUI.action</result>
+			<result name="addBuilding">/addBuilding.jsp</result>
+			<interceptor-ref name="userInterceptor">
+				<!-- 登录方法不拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<!-- 引入默认的拦截器 -->
+			<interceptor-ref name="defaultStack" />
+		</action>
+		
+		<!-- 宿舍模块 -->
+		<action name="dormitory_*" class="dormitoryAction" method="{1}">
+			<result name="dListPage">/dormitoryList.jsp</result>
+			<result name="dorInfo">/updateDormitory.jsp</result>
+			<result name="addDor">/addDor.jsp</result>
+			<interceptor-ref name="userInterceptor">
+				<!-- 登录方法不拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<!-- 引入默认的拦截器 -->
+			<interceptor-ref name="defaultStack" />
+		</action>
+
+	<!--  缺勤记录模块   -->
+		<action name="absenteeRecord_*" class="absenteeRecordAction" method="{1}">
+			<result name="record">/record.jsp</result>
+			<result name="addRecord">/addrecord.jsp</result>
+			<result name="abs">/abs.jsp</result>
+			<result name="showMe">/abs2.jsp</result>
+			<interceptor-ref name="userInterceptor">
+				<!-- 登录方法不拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<!-- 引入默认的拦截器 -->
+			<interceptor-ref name="defaultStack" />
+		</action>
+	
+	
+	</package>
+</struts>
